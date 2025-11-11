@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import TaskList from "./components/testComponent";
+import List from "./components/KanabanLists";
 
 
 function App() {
@@ -11,6 +12,10 @@ function App() {
   return (
     <>
       <div>
+        <h1 className="text-3xl font-bold underline">
+      Hello world!
+        </h1>
+        <List></List>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
