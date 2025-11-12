@@ -50,10 +50,14 @@ export default function List() {
             placeholder="Bio"
           />
           <button 
-            className="btn h-10 btn-wide mt-4 btn-active bg-blue-500 text-white" onClick={() => setActiveZone(zoneName)}
+            className={`btn h-10 btn-wide mt-4 btn-active bg-blue-500 text-white ${activeZone === zoneName ? 'hidden' : ''}`} onClick={() => setActiveZone(zoneName)}
           >
             Add New
           </button>
+          <div className={`flex justify-evenly ${activeZone === zoneName ? '' : 'hidden'}`}>
+            <button className="`btn h-10 w-2/5 rounded-md mt-4 btn-active bg-blue-500 text-white">Save</button>
+            <button className="`btn h-10 w-2/5 rounded-md mt-4 btn-active bg-red-500 text-white" onClick={() => {setActiveZone('default')}}>Cancel</button>
+          </div>
         </div>
       ))}
     </div>
