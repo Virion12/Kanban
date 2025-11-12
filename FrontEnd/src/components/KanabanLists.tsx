@@ -11,31 +11,49 @@ export default function List() {
   ]);
 
   const zones = items.reduce<Record<string, ListElementProps[]>>((acc, item) => {
-  const zoneKey = item.zone as string;
-  if (!acc[zoneKey]) acc[zoneKey] = [];
-  acc[zoneKey].push(item);
-  return acc;
-}, {});
+    const zoneKey = item.zone as string;
+    if (!acc[zoneKey]) acc[zoneKey] = [];
+    acc[zoneKey].push(item);
+    return acc;
+  }, {});
+
+  const [activeZone, setActiveZone] = useState<string>("");
+                                   
+
+  const handleShowInput = (zoneName: string) => {
+    setActiveZone(zoneName); 
+  };
 
   return (
-    <div className="flex gap-4 p-4">
+    <div className="flex gap-4 p-4 items-start">
       {Object.entries(zones).map(([zoneName, zoneItems]) => (
-        <div key={zoneName} className="flex flex-col bg-gray-200 p-2 rounded-xl w-64">
-          <span className="font-bold mb-2">{zoneName}</span>
+        <div key={zoneName} className="flex flex-col bg-gray-200 p-2 rounded-xl w-64" id={zoneName}>
+          <div className="flex justify-between">
+            <span className="ml-1 mb-2 text-2xl">{zoneName}</span>
+            <span className="mr-1 mb-2 text-2xl">...</span>
+          </div>
           {zoneItems.map((item, index) => (
-           <ListElement
-                key={index}
-                isDone={item.isDone}
-                name={item.name}
-                description={item.description}
-                onToggle={() => {
-                    const newItems = [...items];
-                    newItems.find(i => i.name === item.name)!.isDone = !item.isDone;
-                    setItems(newItems);
-                }}
-/>
-
+            <ListElement
+              key={index}
+              isDone={item.isDone}
+              name={item.name}
+              description={item.description}
+              onToggle={() => {
+                const newItems = [...items];
+                newItems.find(i => i.name === item.name)!.isDone = !item.isDone;
+                setItems(newItems);
+              }}
+            />
           ))}
+          <textarea 
+            className={`textarea mt-3 min-h-3 p-2 resize-none ${activeZone === zoneName ? '' : 'hidden'}`}
+            placeholder="Bio"
+          />
+          <button 
+            className="btn h-10 btn-wide mt-4 btn-active bg-blue-500 text-white" onClick={() => setActiveZone(zoneName)}
+          >
+            Add New
+          </button>
         </div>
       ))}
     </div>

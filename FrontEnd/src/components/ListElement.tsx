@@ -1,20 +1,24 @@
 import type { ListElementProps } from "../types";
 
-export default function ListElement({ isDone, name, description, onToggle }: ListElementProps) {
+export default function ListElement({ isDone, name, onToggle }: ListElementProps) {
   return (
-    <div className="flex gap-2 bg-white m-2 p-2 rounded-xl items-start">
-      <label htmlFor={`checkbox-${name}`} className="inline-flex items-start gap-3">
-        <input
-          type="checkbox"
-          className="my-0.5 size-5 rounded border-gray-300 shadow-sm"
-          id={`checkbox-${name}`}
-          checked={isDone}
-          onChange={onToggle} 
-        />
-        <div>
-          <span className="font-medium text-gray-700">{name}</span>
-          <p className="mt-0.5 text-sm text-gray-700">{description}</p>
-        </div>
+    <div className={`group flex items-center gap-3 mt-2 p-2 rounded-md border-2 hover:border-indigo-600 ${
+    isDone ? "bg-blue-200" : "bg-white"
+  }`}
+  
+  >
+      <input
+        type="checkbox"
+        className={`checkbox checkbox-accent checkbox-xs ${isDone ? "visible" : "invisible group-hover:visible"}`}
+        id={`checkbox-${name}`}
+        checked={isDone}
+        onChange={onToggle}
+      />
+      <label
+        htmlFor={`checkbox-${name}`}
+        className="font-medium text-gray-700 cursor-pointer"
+      >
+        {name}
       </label>
     </div>
   );
