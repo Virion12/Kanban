@@ -1,10 +1,26 @@
 import type { ListElementProps } from "../types";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 
-export default function ListElement({ isDone, name, onToggle, onDelete }: ListElementProps) {
+export default function ListElement({ id, isDone, name, onToggle, onDelete }: ListElementProps) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: id,
+  });
+
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  } : undefined;
+
   return (
-    <div className={`group flex items-center gap-3 mt-2 p-2 rounded-md border-2 hover:border-indigo-600 ${
-      isDone ? "bg-blue-200" : "bg-white"
-    }`}>
+    <div 
+      ref={setNodeRef} 
+      style={style}
+      {...listeners} 
+      {...attributes}
+      className={`group flex items-center gap-3 mt-2 p-2 rounded-md border-2 hover:border-indigo-600 ${
+        isDone ? "bg-blue-200" : "bg-white"
+      }`}
+    >
       <div className="flex-1">
         <input
           type="checkbox"
